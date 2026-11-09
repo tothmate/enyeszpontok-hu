@@ -28,7 +28,9 @@ function pages(dir, rel = "") {
     page.on("console", (m) => m.type() === "error" && issues.push("console: " + m.text()));
     page.on("requestfailed", (r) => issues.push("failed: " + r.url() + " " + (r.failure() || {}).errorText));
     page.on("response", (r) => r.status() >= 400 && issues.push(r.status() + ": " + r.url()));
-    page.on("request", (r) => /enyeszpontok\.hu/.test(r.url()) && issues.push("old server: " + r.url()));
+    // When checking a copy on another host, flag anything still loaded from the real domain.
+    if (!/enyeszpontok\.hu/.test(base))
+      page.on("request", (r) => /enyeszpontok\.hu/.test(r.url()) && issues.push("old server: " + r.url()));
     try {
       await page.goto(url, { waitUntil: "networkidle", timeout: 60000 });
       await page.evaluate(async () => {
