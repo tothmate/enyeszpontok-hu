@@ -1,0 +1,1 @@
+https://enyeszpontok.hu/wp-content/plugins/pdf-embedder/assets/js/pdfjs/pdf.worker.min.js
