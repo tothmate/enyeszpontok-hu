@@ -71,7 +71,8 @@ for root, _, files in os.walk(dst):
         with open(p, "w", encoding="utf-8", errors="surrogateescape") as fh:
             fh.write(s)
 
-# 2. Hosting extras: skip Jekyll processing on GitHub Pages.
-#    (The custom domain is set in the Pages settings at DNS cutover time.)
+# 2. Hosting extras for GitHub Pages: custom domain, skip Jekyll processing.
+with open(os.path.join(dst, "CNAME"), "w") as fh:
+    fh.write("enyeszpontok.hu")
 open(os.path.join(dst, ".nojekyll"), "w").close()
 print("done")
